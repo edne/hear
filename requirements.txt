@@ -1,0 +1,3 @@
+numpy
+jack-client
+pyaudio
