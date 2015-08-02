@@ -13,3 +13,37 @@ code by someone else).
 but, obviously, works only with an active Jack server.
 
 I want both.
+
+## Usage
+To read audio from the microphone:
+```python
+from hear import hear
+
+
+def callback(data):
+    left  = data[0]
+    right = data[1]
+    # do stuff
+
+hear(callback)
+```
+where `data` is a [NumPy](http://www.numpy.org/) array.
+
+If you have an active Jack server running the callback is processed by a Jack
+client, otherwise by PyAudio.
+
+`hear` takes also other arguments:
+```python
+def hear(callback, channels=2, body=None, jack_client="Hear"):
+    ...
+```
+`jack_client` is the client name, and `body` is the action (a function) performed
+while the client/pa-stream is running, by default:
+```python
+def body():
+    try:
+        while True:
+            sleep(0.1)
+    except KeyboardInterrupt:
+        print("Interrupted by user")
+```
