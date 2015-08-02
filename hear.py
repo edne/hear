@@ -1,9 +1,9 @@
 import numpy as np
 
 
-def hear_jack(callback, channels, body):
+def hear_jack(callback, channels, body, client_name):
     import jack
-    client = jack.Client("Test Client")
+    client = jack.Client(client_name)
 
     if client.status.server_started:
         print("JACK server started")
@@ -84,7 +84,7 @@ def is_jack_active():
                 for api in apis])
 
 
-def hear(callback, channels=2, body=None):
+def hear(callback, channels=2, body=None, jack_client="Hear"):
 
     def default_body():
         from time import sleep
@@ -98,6 +98,6 @@ def hear(callback, channels=2, body=None):
         body = default_body
 
     if is_jack_active():
-        hear_jack(callback, channels, body)
+        hear_jack(callback, channels, body, jack_client)
     else:
         hear_pa(callback, channels, body)
