@@ -1,5 +1,26 @@
 import numpy as np
 
+__all__ = ["hear"]
+
+
+def hear(callback, channels=2, body=None, jack_client="Hear"):
+
+    def default_body():
+        from time import sleep
+        try:
+            while True:
+                sleep(0.1)
+        except KeyboardInterrupt:
+            print("\nInterrupted by user")
+
+    if body is None:
+        body = default_body
+
+    if is_jack_active():
+        hear_jack(callback, channels, body, jack_client)
+    else:
+        hear_pa(callback, channels, body)
+
 
 def hear_jack(callback, channels, body, client_name):
     import jack
@@ -82,22 +103,3 @@ def is_jack_active():
 
     return any([api.lower().startswith("jack")
                 for api in apis])
-
-
-def hear(callback, channels=2, body=None, jack_client="Hear"):
-
-    def default_body():
-        from time import sleep
-        try:
-            while True:
-                sleep(0.1)
-        except KeyboardInterrupt:
-            print("\nInterrupted by user")
-
-    if body is None:
-        body = default_body
-
-    if is_jack_active():
-        hear_jack(callback, channels, body, jack_client)
-    else:
-        hear_pa(callback, channels, body)
