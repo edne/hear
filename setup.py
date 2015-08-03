@@ -1,12 +1,15 @@
 from distutils.core import setup
 
-readme = "README.md"
 try:
-    from pypandoc import convert
-    long_description = convert(readme, 'rst')
-except ImportError:
-    print("warning: pypandoc not found, could not convert Markdown to RST")
-    long_description = open(readme, 'r').read()
+    readme = "README.md"
+    try:
+        from pypandoc import convert
+        long_description = convert(readme, 'rst')
+    except ImportError:
+        print("warning: pypandoc not found, could not convert Markdown to RST")
+        long_description = open(readme, 'r').read()
+except IOError:
+    long_description = ""
 
 setup(
     name="Hear",
