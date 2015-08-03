@@ -18,7 +18,7 @@ setup(
     url="https://github.com/edne/hear",
     description="Boilerplate for Jack and PyAudio",
     long_description=long_description,
-    version="0.1",
+    version="0.1.1",
     packages=["hear"],
     license="MIT License",
     install_requires=[

@@ -48,6 +48,11 @@ def body():
         print("Interrupted by user")
 ```
 
+## Installing
+```bash
+pip install hear --allow-unverified pyaudio
+```
+
 ## Known Issues
 - If you change the Jack state you have to reload the whole application. (To
   check the available backends Hear uses PyAudio, and the C part inizializes
