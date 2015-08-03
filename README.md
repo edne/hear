@@ -47,3 +47,8 @@ def body():
     except KeyboardInterrupt:
         print("Interrupted by user")
 ```
+
+## Known Issues
+- If you change the Jack state you have to reload the whole application. (To
+  check the available backends Hear uses PyAudio, and the C part inizializes
+  everything just one time storing the state in some global variables)
