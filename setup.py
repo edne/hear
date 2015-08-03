@@ -1,14 +1,9 @@
 from distutils.core import setup
 
 try:
-    readme = "README.md"
-    try:
-        from pypandoc import convert
-        long_description = convert(readme, 'rst')
-    except ImportError:
-        print("warning: pypandoc not found, could not convert Markdown to RST")
-        long_description = open(readme, 'r').read()
-except IOError:
+    with open("README.rst", "r") as f:
+        long_description = f.read()
+except EnvironmentError:
     long_description = ""
 
 setup(
@@ -18,7 +13,7 @@ setup(
     url="https://github.com/edne/hear",
     description="Boilerplate for Jack and PyAudio",
     long_description=long_description,
-    version="0.1.1",
+    version="0.1.2",
     packages=["hear"],
     license="MIT License",
     install_requires=[
