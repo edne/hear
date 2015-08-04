@@ -44,11 +44,13 @@ Jack client, otherwise by PyAudio.
 
 .. code:: python
 
-    def hear(callback, channels=2, body=None, jack_client="Hear"):
+    def hear(callback, channels=2, body=None,
+             jack_client="Hear",
+             rate=44100, frames_per_buffer=1024):
         ...
 
-``jack_client`` is the client name, and ``body`` is the action (a
-function) performed while the client/pa-stream is running, by default:
+``body`` is the action (a function) performed while the client/pa-stream is
+running, by default:
 
 .. code:: python
 
@@ -58,6 +60,12 @@ function) performed while the client/pa-stream is running, by default:
                 sleep(0.1)
         except KeyboardInterrupt:
             print("Interrupted by user")
+
+``jack_client``, Jack only, is the client name.
+
+``rate`` and ``frames_per_buffer`` are PyAudio only, if you want to reuse the
+same code switching between the two backends make sure to be using the same
+values in your Jack configuration.
 
 Installing
 ----------

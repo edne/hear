@@ -3,7 +3,9 @@ import numpy as np
 __all__ = ["hear"]
 
 
-def hear(callback, channels=2, body=None, jack_client="Hear"):
+def hear(callback, channels=2, body=None,
+         jack_client="Hear",
+         rate=44100, frames_per_buffer=1024):
 
     def default_body():
         from time import sleep
@@ -19,7 +21,7 @@ def hear(callback, channels=2, body=None, jack_client="Hear"):
     if is_jack_active():
         hear_jack(callback, channels, body, jack_client)
     else:
-        hear_pa(callback, channels, body)
+        hear_pa(callback, channels, body, rate, frames_per_buffer)
 
 
 def hear_jack(callback, channels, body, client_name):
@@ -60,7 +62,7 @@ def hear_jack(callback, channels, body, client_name):
     client.close()
 
 
-def hear_pa(callback, channels, body):
+def hear_pa(callback, channels, body, rate, frames_per_buffer):
     import pyaudio
     pa = pyaudio.PyAudio()
 
@@ -76,7 +78,8 @@ def hear_pa(callback, channels, body):
 
     stream = pa.open(format=pyaudio.paFloat32,
                      channels=channels,
-                     rate=44100,
+                     rate=rate,
+                     frames_per_buffer=frames_per_buffer,
                      input=True,
                      input_device_index=0,
                      stream_callback=stream_cb
