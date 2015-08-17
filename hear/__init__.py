@@ -54,7 +54,10 @@ def hear_jack(callback, channels, body, client_name):
 
     if capture:
         for src, dest in zip(capture, client.inports):
-            client.connect(src, dest)
+            try:
+                client.connect(src, dest)
+            except jack.JackError:
+                pass
 
     body()
 
